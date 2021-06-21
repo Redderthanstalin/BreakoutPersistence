@@ -10,16 +10,17 @@ public class UIMenuHandler : MonoBehaviour
 {
     public static UIMenuHandler Instance;
 
-    protected string PlayerName;
+    protected string playerName;
     protected int highScore;
 
     //The buttons on the Main Menu
-    [SerializeField] InputField playerName;
+    [SerializeField] InputField playerNameInput;
     [SerializeField] Text displayPlayerName;
     [SerializeField] Button startGame;
     [SerializeField] Button quitGame;
 
     public int HighScore { get; set; }
+    public string PlayerName { get; set; }
 
     public void Awake()
     {
@@ -36,7 +37,7 @@ public class UIMenuHandler : MonoBehaviour
 
     public void Start()
     {
-        playerName.onEndEdit.AddListener(delegate { DisplayPlayerName(playerName); });
+        playerNameInput.onEndEdit.AddListener(delegate { DisplayPlayerName(playerNameInput); });
         startGame.onClick.AddListener(delegate { StartGame(); });
         quitGame.onClick.AddListener(delegate { QuitGame(); });
     }

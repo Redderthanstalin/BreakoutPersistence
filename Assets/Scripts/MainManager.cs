@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
-    public static MainManager Instance;
-
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text HighScoreText;
+    public Text PlayerName;
     public GameObject GameOverText;
     
     private bool m_Started = false;
@@ -22,17 +22,6 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
-
-    private void Awake()
-    {
-        if(Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +40,9 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        HighScoreText.text = "High Score: " + + UIMenuHandler.Instance.HighScore;
+        PlayerName.text = UIMenuHandler.Instance.PlayerName;
     }
 
     private void Update()
@@ -87,13 +79,11 @@ public class MainManager : MonoBehaviour
     {
         m_Points += point;
         ScoreText.text = $"Score : {m_Points}";
-    }
+    } 
 
-    public void GameOver()
+    public void GameOver() 
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
     }
-
-    
 }

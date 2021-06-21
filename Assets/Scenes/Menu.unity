@@ -535,7 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6f2d53abff424489ab8975ef1e6c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: {fileID: 1550700218}
+  playerNameInput: {fileID: 1550700218}
   displayPlayerName: {fileID: 1436953662}
   startGame: {fileID: 859838995}
   quitGame: {fileID: 1781866599}
@@ -823,7 +823,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Start Game
 --- !u!222 &1504013362
 CanvasRenderer:
   m_ObjectHideFlags: 0
