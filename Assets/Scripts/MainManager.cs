@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
-    public int HighScore;
+    public static MainManager Instance;
 
     public Brick BrickPrefab;
     public int LineCount = 6;
@@ -25,7 +25,13 @@ public class MainManager : MonoBehaviour
 
     private void Awake()
     {
-        LoadHighScore();
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
@@ -64,10 +70,10 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
-            if (m_Points > HighScore)
+            if (m_Points > UIMenuHandler.Instance.HighScore)
             {
-                HighScore = m_Points;
-                SaveHighScore();
+                UIMenuHandler.Instance.HighScore = m_Points;
+                UIMenuHandler.Instance.SaveHighScore();
             }
             
             if (Input.GetKeyDown(KeyCode.Space))
@@ -89,37 +95,5 @@ public class MainManager : MonoBehaviour
         GameOverText.SetActive(true);
     }
 
-    [System.Serializable]
-    class SaveData
-    {
-        public int HighScore;
-    }
-
-    public void SaveHighScore()
-    {
-        SaveData data = new SaveData();
-        data.HighScore = HighScore;
-
-        string json = JsonUtility.ToJson(data);
-
-        File.WriteAllText(Application.persistentDataPath + "/savedata.json", json);
-    }
-
-    public void LoadHighScore()
-    {
-        string path = Application.persistentDataPath + "/savedata.json";
-        
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-            HighScore = data.HighScore;
-        }
-        else
-        {
-            HighScore = 0;
-        }
-    }
+    
 }
